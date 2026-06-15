@@ -26,6 +26,20 @@ async def create_preset(body: PresetCreate, session: AsyncSession = Depends(get_
     return preset
 
 
+@router.put("/{preset_id}", response_model=PresetRead)
+async def update_preset(
+    preset_id: int, body: PresetCreate, session: AsyncSession = Depends(get_session)
+):
+    preset = await session.get(Preset, preset_id)
+    if preset is None:
+        raise HTTPException(404, "preset no encontrado")
+    preset.name = body.name
+    preset.knobs = body.knobs.model_dump()
+    await session.commit()
+    await session.refresh(preset)
+    return preset
+
+
 @router.delete("/{preset_id}", status_code=204)
 async def delete_preset(preset_id: int, session: AsyncSession = Depends(get_session)):
     preset = await session.get(Preset, preset_id)

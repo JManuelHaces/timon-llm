@@ -1,6 +1,9 @@
 """Schemas Pydantic de la API. Reutiliza KnobVector del engine."""
 
+from datetime import datetime
+
 from pydantic import BaseModel
+
 from timon_engine.base import Mode
 from timon_engine.knobs import KnobVector
 
@@ -21,6 +24,7 @@ class PresetRead(BaseModel):
     id: int
     name: str
     knobs: KnobVector
+    created_at: datetime
 
     model_config = {"from_attributes": True}
 

@@ -33,12 +33,20 @@ async def test_chat_streams(client):
 
 
 async def test_presets_crud(client):
-    created = await client.post("/api/presets", json={"name": "Voz Soporte", "knobs": {"warmth": 90}})
+    created = await client.post(
+        "/api/presets", json={"name": "Voz Soporte", "knobs": {"warmth": 90}}
+    )
     assert created.status_code == 201
     pid = created.json()["id"]
 
     listed = await client.get("/api/presets")
     assert any(p["id"] == pid for p in listed.json())
+
+    updated = await client.put(
+        f"/api/presets/{pid}", json={"name": "Voz Formal", "knobs": {"formality": 95}}
+    )
+    assert updated.status_code == 200
+    assert updated.json()["name"] == "Voz Formal"
 
     deleted = await client.delete(f"/api/presets/{pid}")
     assert deleted.status_code == 204
