@@ -1,0 +1,28 @@
+# Dev local: API (mock) + Postgres. El engine GPU se corre aparte (cluster/RunPod).
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      TIMON_ENGINE: mock
+      TIMON_DATABASE_URL: postgresql+asyncpg://timon:timon@db:5432/timon
+      TIMON_CORS_ORIGINS: '["http://localhost:3000"]'
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: timon
+      POSTGRES_PASSWORD: timon
+      POSTGRES_DB: timon
+    ports:
+      - "5432:5432"
+    volumes:
+      - timon_pgdata:/var/lib/postgresql/data
+
+volumes:
+  timon_pgdata:
