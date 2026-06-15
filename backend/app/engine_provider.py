@@ -2,10 +2,9 @@
 
 from functools import lru_cache
 
+from app.settings import settings
 from timon_engine.base import SteeringEngine
 from timon_engine.mock import MockSteeringEngine
-
-from app.settings import settings
 
 
 @lru_cache

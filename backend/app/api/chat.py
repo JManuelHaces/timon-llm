@@ -2,10 +2,10 @@
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
-from timon_engine.base import SteeringEngine
 
 from app.engine_provider import get_engine
 from app.schemas import ChatRequest
+from timon_engine.base import SteeringEngine
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
