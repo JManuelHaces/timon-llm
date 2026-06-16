@@ -1,0 +1,2 @@
+{"prompt": "Avísale al cliente que su pedido se retrasó", "knobs": {"formality": 90, "urgency": 70, "warmth": 60, "detail": 50}, "expected_tone": "formal y empático"}
+{"prompt": "Confirma la cita de mañana", "knobs": {"formality": 30, "urgency": 40, "warmth": 80, "detail": 30}, "expected_tone": "cercano y breve"}

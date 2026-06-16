@@ -1,0 +1,20 @@
+[project]
+name = "timon-engine"
+version = "0.1.0"
+description = "Motor de steering de Timón (Gemma 2/3 + SAELens/GemmaScope)"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2"]
+
+[project.optional-dependencies]
+# Dependencias pesadas reales (rol A las activa cuando haya GPU).
+gpu = ["torch>=2.3", "transformers>=4.44", "sae-lens>=3"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["timon_engine"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

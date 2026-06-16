@@ -216,3 +216,40 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ── Timón ─────────────────────────────────────────────
+# Claude / herramientas de IA
+.claude/
+CLAUDE.local.md
+**/.claude/settings.local.json
+
+# Entornos y env
+.env
+.env.*
+!.env.example
+!**/.env.example
+!**/.env.local.example
+frontend/.env.local
+
+# Python / uv
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.db
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+
+# Modelos (pesos grandes — nunca al repo)
+models/
+*.safetensors
+*.gguf
+*.bin
+
+# El .gitignore base de Python ignora `lib/`; el frontend tiene código ahí.
+!frontend/lib/
+!frontend/lib/**

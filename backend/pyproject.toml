@@ -1,0 +1,20 @@
+[project]
+name = "timon-backend"
+version = "0.1.0"
+description = "API FastAPI de Timón (API + streaming, sin GPU)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2",
+    "pydantic-settings>=2",
+    "sqlalchemy[asyncio]>=2",
+    "aiosqlite>=0.20",
+    "timon-engine",
+]
+
+[project.optional-dependencies]
+postgres = ["asyncpg>=0.29"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

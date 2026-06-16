@@ -1,0 +1,11 @@
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[lint.isort]
+known-first-party = ["timon_engine", "app"]
+
+[lint.per-file-ignores]
+"backend/app/api/*.py" = ["B008"]
