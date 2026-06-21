@@ -1,4 +1,4 @@
-# Dev local: API (mock) + Postgres. El engine GPU se corre aparte (cluster/RunPod).
+# Dev local: API + Postgres. El engine GPU se corre aparte (cluster/RunPod).
 services:
   backend:
     build:
@@ -6,6 +6,8 @@ services:
       dockerfile: backend/Dockerfile
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       TIMON_ENGINE: mock
       TIMON_DATABASE_URL: postgresql+asyncpg://timon:timon@db:5432/timon

@@ -12,5 +12,14 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./timon.db"
     cors_origins: list[str] = ["http://localhost:3000"]
 
+    # ── Google OAuth ──
+    google_client_id: str = ""
+    google_client_secret: str = ""
+
+    # ── JWT ──
+    jwt_secret: str = "change-me-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 1440  # 24h
+
 
 settings = Settings()

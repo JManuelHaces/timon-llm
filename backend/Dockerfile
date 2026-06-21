@@ -9,7 +9,7 @@ COPY pyproject.toml uv.lock ./
 COPY backend ./backend
 COPY engine ./engine
 
-RUN uv sync --frozen --package timon-backend
+RUN uv lock --upgrade && uv sync --frozen --package timon-backend --extra postgres
 
 EXPOSE 8000
 CMD ["uv", "run", "uvicorn", "app.main:app", "--app-dir", "backend", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,7 +1,74 @@
-:root {
-  --bg: #0b0e14;
-  --fg: #e6e6e6;
-  --accent: #4f8cff;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
 }
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif; }
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-abyss text-foam font-sans antialiased;
+    background-image: theme("backgroundImage.horizon");
+    background-attachment: fixed;
+  }
+
+  /* Cuadrícula de carta náutica de fondo */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, rgba(45, 212, 191, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(45, 212, 191, 0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 80%);
+  }
+
+  ::selection {
+    background: rgba(224, 168, 90, 0.3);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-hull-border rounded-full;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-hull/70 border border-hull-border/70 backdrop-blur-xl rounded-2xl shadow-panel;
+  }
+
+  .panel-label {
+    @apply text-[11px] font-display font-medium uppercase tracking-[0.18em] text-foam-dim;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-hull-border to-transparent;
+  }
+}

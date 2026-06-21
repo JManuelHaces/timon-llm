@@ -1,34 +1,48 @@
 "use client";
-import { useState } from "react";
-import type { Knobs } from "@/lib/api";
+import { RotateCcw } from "lucide-react";
+import { Knob } from "./Knob";
+import { useTimon, KNOB_META, type KnobName } from "@/lib/store";
 
-const NAMES: (keyof Knobs)[] = ["formality", "urgency", "warmth", "detail"];
-const LABELS: Record<keyof Knobs, string> = {
-  formality: "Formalidad",
-  urgency: "Urgencia",
-  warmth: "Calidez",
-  detail: "Detalle",
+const ACCENT: Record<KnobName, string> = {
+  formality: "#2dd4bf",
+  urgency: "#ff6b6b",
+  warmth: "#e0a85a",
+  detail: "#a78bfa",
 };
 
-// Consola de perillas (slide 4). TODO(rol B): elevar el estado y conectarlo al chat.
+const ORDER: KnobName[] = ["formality", "urgency", "warmth", "detail"];
+
 export function KnobConsole() {
-  const [knobs, setKnobs] = useState<Knobs>({ formality: 50, urgency: 50, warmth: 50, detail: 50 });
+  const knobs = useTimon((s) => s.knobs);
+  const setKnob = useTimon((s) => s.setKnob);
+  const reset = useTimon((s) => s.resetKnobs);
+
   return (
-    <div>
-      <h2 style={{ fontSize: 14, opacity: 0.7 }}>Consola de voz</h2>
-      {NAMES.map((name) => (
-        <label key={name} style={{ display: "block", marginBottom: 12 }}>
-          {LABELS[name]}: {knobs[name]}
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={knobs[name]}
-            onChange={(e) => setKnobs({ ...knobs, [name]: Number(e.target.value) })}
-            style={{ width: "100%" }}
-          />
-        </label>
-      ))}
-    </div>
+    <section className="glass p-5">
+      <header className="mb-4 flex items-center justify-between">
+        <h2 className="panel-label">Consola de voz</h2>
+        <button
+          onClick={reset}
+          className="flex items-center gap-1.5 rounded-lg border border-hull-border/70 px-2.5 py-1 text-[11px] text-foam-dim transition hover:border-brass/50 hover:text-brass"
+        >
+          <RotateCcw size={12} /> Centrar
+        </button>
+      </header>
+
+      <div className="grid grid-cols-2 gap-x-2 gap-y-6">
+        {ORDER.map((name) => (
+          <div key={name} className="flex justify-center">
+            <Knob
+              value={knobs[name]}
+              onChange={(v) => setKnob(name, v)}
+              label={KNOB_META[name].label}
+              low={KNOB_META[name].low}
+              high={KNOB_META[name].high}
+              accent={ACCENT[name]}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
